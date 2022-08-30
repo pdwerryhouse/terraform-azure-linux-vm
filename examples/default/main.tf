@@ -3,7 +3,7 @@ data "azurerm_resource_group" "example" {
 }
 
 module "network" {
-  source = "/home/paul/dev/terraform/azure/terraform-azure-network"
+  source = "github.com/pdwerryhouse/terraform-azure-network?ref=0.0.1"
 
   name            = var.name
   env             = var.env
