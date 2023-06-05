@@ -19,18 +19,14 @@ data "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_public_ip" "ip" {
-  name                         = "${var.name}-${var.env}-ip"
+  name                         = "${var.name}-ip"
   resource_group_name          = data.azurerm_resource_group.rg.name
   location                     = data.azurerm_resource_group.rg.location
   allocation_method            = "Dynamic"
-
-  tags = {
-      environment = var.env
-  }
 }
 
 resource "azurerm_network_security_group" "sg" {
-    name                = "${var.name}-${var.env}-sg"
+    name                = "${var.name}-sg"
     resource_group_name = data.azurerm_resource_group.rg.name
     location            = data.azurerm_resource_group.rg.location
 
@@ -45,14 +41,10 @@ resource "azurerm_network_security_group" "sg" {
         source_address_prefix      = "*"
         destination_address_prefix = "*"
     }
-
-    tags = {
-        environment = var.env
-    }
 }
 
 resource "azurerm_network_interface" "interface" {
-  name                = "${var.name}-${var.env}-interface"
+  name                = "${var.name}-interface"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
 
@@ -70,7 +62,7 @@ resource "azurerm_network_interface_security_group_association" "int_sg" {
 }
 
 resource "azurerm_linux_virtual_machine" "instance" {
-  name                = "${var.name}-${var.env}-instance"
+  name                = "${var.name}-instance"
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
   size                = var.instance_size

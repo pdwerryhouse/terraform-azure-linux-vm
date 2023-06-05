@@ -14,7 +14,6 @@ module "network" {
 module "compute" {
   source = "../.."
 
-  env             = var.env
   disk_size       = var.compute_disk_size
   instance_size   = var.compute_instance_size
   name            = var.name
