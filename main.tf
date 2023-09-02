@@ -14,21 +14,17 @@
 ##    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-data "azurerm_resource_group" "rg" {
-  name = var.rg_name
-}
-
 resource "azurerm_public_ip" "ip" {
   name                         = "${var.name}-ip"
-  resource_group_name          = data.azurerm_resource_group.rg.name
-  location                     = data.azurerm_resource_group.rg.location
+  resource_group_name          = var.resource_group.name
+  location                     = var.resource_group.location
   allocation_method            = "Dynamic"
 }
 
 resource "azurerm_network_security_group" "sg" {
     name                = "${var.name}-sg"
-    resource_group_name = data.azurerm_resource_group.rg.name
-    location            = data.azurerm_resource_group.rg.location
+    resource_group_name          = var.resource_group.name
+    location                     = var.resource_group.location
 
     security_rule {
         name                       = "SSH"
@@ -45,8 +41,8 @@ resource "azurerm_network_security_group" "sg" {
 
 resource "azurerm_network_interface" "interface" {
   name                = "${var.name}-interface"
-  location            = data.azurerm_resource_group.rg.location
-  resource_group_name = data.azurerm_resource_group.rg.name
+  resource_group_name          = var.resource_group.name
+  location                     = var.resource_group.location
 
   ip_configuration {
     name                          = "internal"
@@ -63,8 +59,8 @@ resource "azurerm_network_interface_security_group_association" "int_sg" {
 
 resource "azurerm_linux_virtual_machine" "instance" {
   name                = "${var.name}-instance"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  location            = data.azurerm_resource_group.rg.location
+  resource_group_name          = var.resource_group.name
+  location                     = var.resource_group.location
   size                = var.instance_size
   admin_username      = var.username
   network_interface_ids = [

@@ -15,7 +15,12 @@ module "compute" {
   source = "../.."
 
   name            = "my_linux_instance"
-  rg_name         = data.azurerm_resource_group.example.name
+
+  resource_group = {
+    name         = data.azurerm_resource_group.example.name
+    location     = data.azurerm_resource_group.example.location
+  }
+  
   ssh_key_file    = "/path/to/ssh/public/key"
   subnet_id       = module.network.subnet_id
   username        = "admin"
