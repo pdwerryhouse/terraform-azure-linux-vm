@@ -14,12 +14,9 @@ module "network" {
 module "compute" {
   source = "../.."
 
-  disk_size       = var.compute_disk_size
-  instance_size   = var.compute_instance_size
-  name            = var.name
+  name            = "my_linux_instance"
   rg_name         = data.azurerm_resource_group.example.name
-  ssh_key_file    = var.ssh_key_file
+  ssh_key_file    = "/path/to/ssh/public/key"
   subnet_id       = module.network.subnet_id
-  username        = var.compute_username
-  #image_sku       = ""
+  username        = "admin"
 }

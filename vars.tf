@@ -15,8 +15,8 @@
 
 variable "disk_caching" { default = "ReadWrite" }
 variable "disk_type" { default = "Standard_LRS" }
-variable "disk_size" { }
-variable "instance_size" { }
+variable "disk_size" { default = "20" }
+variable "instance_size" { default = "Standard_F2" }
 variable "name" { }
 variable "rg_name" { }
 variable "ssh_key_file" { }
