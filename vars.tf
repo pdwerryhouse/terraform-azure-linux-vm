@@ -17,14 +17,20 @@ variable "disk_caching" { default = "ReadWrite" }
 variable "disk_type" { default = "Standard_LRS" }
 variable "disk_size" { default = "20" }
 variable "instance_size" { default = "Standard_F2" }
-variable "name" { }
-variable "ssh_key_file" { }
-variable "subnet_id" { }
-variable "username" { }
+variable "name" {}
+variable "ssh_key_file" {}
+variable "subnet_id" {}
+variable "username" {}
 variable "image_publisher" { default = "Canonical" }
 variable "image_offer" { default = "UbuntuServer" }
 variable "image_sku" { default = "18.04-LTS" }
 variable "image_version" { default = "latest" }
+
+variable "public_ip_enabled" {
+  description = "Set to false to disable a public IP address"
+  type        = bool
+  default     = true
+}
 
 variable "resource_group" {
   type = map(string)

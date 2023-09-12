@@ -14,6 +14,8 @@
 ##    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 output "id" { value = azurerm_linux_virtual_machine.instance.id }
-output "public_ip_address" { value = azurerm_linux_virtual_machine.instance.public_ip_address }
+output "public_ip_address" {
+  value = var.public_ip_enabled == true ? azurerm_linux_virtual_machine.instance.public_ip_address : null
+}
 output "private_ip_address" { value = azurerm_linux_virtual_machine.instance.private_ip_address }
 output "virtual_machine_id" { value = azurerm_linux_virtual_machine.instance.virtual_machine_id }
