@@ -26,7 +26,7 @@ variable "image_offer" { default = "UbuntuServer" }
 variable "image_sku" { default = "18.04-LTS" }
 variable "image_version" { default = "latest" }
 
-variables "public_ip_enabled" {
+variable "public_ip_enabled" {
   description = "Set to false to disable a public IP address"
   type = bool
   default = true
