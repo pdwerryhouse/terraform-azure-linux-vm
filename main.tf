@@ -15,35 +15,35 @@
 
 
 resource "azurerm_public_ip" "ip" {
-  count                        = var.public_ip_enabled == true ? 1 : 0
-  name                         = "${var.name}-ip"
-  resource_group_name          = var.resource_group.name
-  location                     = var.resource_group.location
-  allocation_method            = "Dynamic"
+  count               = var.public_ip_enabled == true ? 1 : 0
+  name                = "${var.name}-ip"
+  resource_group_name = var.resource_group.name
+  location            = var.resource_group.location
+  allocation_method   = "Dynamic"
 }
 
 resource "azurerm_network_security_group" "sg" {
-    name                = "${var.name}-sg"
-    resource_group_name          = var.resource_group.name
-    location                     = var.resource_group.location
+  name                = "${var.name}-sg"
+  resource_group_name = var.resource_group.name
+  location            = var.resource_group.location
 
-    security_rule {
-        name                       = "SSH"
-        priority                   = 1001
-        direction                  = "Inbound"
-        access                     = "Allow"
-        protocol                   = "Tcp"
-        source_port_range          = "*"
-        destination_port_range     = "22"
-        source_address_prefix      = "*"
-        destination_address_prefix = "*"
-    }
+  security_rule {
+    name                       = "SSH"
+    priority                   = 1001
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
 }
 
 resource "azurerm_network_interface" "interface" {
   name                = "${var.name}-interface"
-  resource_group_name          = var.resource_group.name
-  location                     = var.resource_group.location
+  resource_group_name = var.resource_group.name
+  location            = var.resource_group.location
 
   ip_configuration {
     name                          = "internal"
@@ -54,14 +54,14 @@ resource "azurerm_network_interface" "interface" {
 }
 
 resource "azurerm_network_interface_security_group_association" "int_sg" {
-    network_interface_id      = azurerm_network_interface.interface.id
-    network_security_group_id = azurerm_network_security_group.sg.id
+  network_interface_id      = azurerm_network_interface.interface.id
+  network_security_group_id = azurerm_network_security_group.sg.id
 }
 
 resource "azurerm_linux_virtual_machine" "instance" {
   name                = "${var.name}-instance"
-  resource_group_name          = var.resource_group.name
-  location                     = var.resource_group.location
+  resource_group_name = var.resource_group.name
+  location            = var.resource_group.location
   size                = var.instance_size
   admin_username      = var.username
   network_interface_ids = [
